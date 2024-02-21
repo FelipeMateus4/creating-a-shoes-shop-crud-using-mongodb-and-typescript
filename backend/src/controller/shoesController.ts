@@ -20,8 +20,26 @@ router.post("/", async (req, res) => {
         await shoesServices.createProductShoes(shoes);
         return res.status(201).send(shoes);
     } catch (err) {
-        console.error(err);
         return res.status(500).send({ message: "An error occurred while creating the product." });
+    }
+});
+
+router.get("/", async (req, res) => {    
+    try {
+        const products = await shoesServices.getProductsShoes();
+        return res.status(200).send(products);
+    } catch (err) {
+        return res.status(500).send({ message: "An error occurred while fetching the products." });
+    }
+});
+
+router.delete("/:name", async (req, res) => {    
+    try {
+        const name =  req.params.name;
+        const products = await shoesServices.deleteProductShoes(name)
+        return res.status(200).send(products);
+    } catch (err) {
+        return res.status(500).send({ message: "An error occurred while fetching the products." });
     }
 });
 

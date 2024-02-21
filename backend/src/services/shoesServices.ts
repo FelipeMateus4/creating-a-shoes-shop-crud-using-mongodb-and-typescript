@@ -11,4 +11,25 @@ const createProductShoes = async ( shoe: CreateShoesType ) =>{
     }
 };
 
-export default{ createProductShoes };
+const getProductsShoes = async () => {
+    try {
+        const products = await ProductShoes.find({});
+        return products;
+    } catch (error) {
+        throw error;
+    }
+};
+const deleteProductShoes = async (shoes: string) => {
+    try {  
+    const searchname =  shoes;
+    const deleteshoe = await ProductShoes.findOne({name: searchname})
+} catch (error) {
+    throw error
+};
+    try {
+    await ProductShoes.deleteOne();
+    } catch (error) {
+        throw error;
+    }
+};
+export default{ createProductShoes, getProductsShoes, deleteProductShoes};
