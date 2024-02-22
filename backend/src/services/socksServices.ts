@@ -11,4 +11,28 @@ const createProductSocks = async ( sock: CreateSocksType ) =>{
     }
 };
 
-export default{ createProductSocks };
+const deleteProductSocks = async (name: string) => {
+    try {
+        await ProductSocks.findOneAndDelete({name})
+    } catch (error) {
+        throw error
+    }
+};
+
+const updateProductSocks = async (name: string, update: CreateSocksType) => {
+    try {
+        const options =  {new: true};
+        const newData = await ProductSocks.findOneAndUpdate({name}, update, options)
+        if(!newData)
+            return {error: "Não encontrado!"}
+        else
+            return newData
+    } catch (error) {
+        throw error
+    }
+}
+
+
+
+
+export default{ createProductSocks, deleteProductSocks, updateProductSocks}
