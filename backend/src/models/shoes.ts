@@ -9,6 +9,7 @@ interface shoes {
     price: number;
     color: string;
     flavor: string;
+    stock: number;
 }
 
 const productSchema = new Schema<shoes>({ 
@@ -20,6 +21,7 @@ const productSchema = new Schema<shoes>({
     price: {type: Number, required: false },
     color: {type: String, required: false },
     flavor: {type: String, required: false },
+    stock: {type: Number, required: true },
  });
 
  const Product  = model<shoes>('Product', productSchema, 'tenis');

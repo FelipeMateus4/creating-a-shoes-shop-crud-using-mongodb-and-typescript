@@ -19,17 +19,42 @@ const getProductsShoes = async () => {
         throw error;
     }
 };
+
 const deleteProductShoes = async (shoes: string) => {
     try {  
     const searchname =  shoes;
-    await ProductShoes.findOne({name: searchname})
-} catch (error) {
-    throw error
-};
-    try {
-    await ProductShoes.deleteOne();
+    console.log(searchname)
+    const prod = await ProductShoes.findOne({name: searchname});
+    if (!prod){
+        return { error: "Produto não encontrado" };
+    }
+    await ProductShoes.deleteOne({ name: searchname });
+    return { message: "deu certo poha"};
     } catch (error) {
         throw error;
     }
 };
-export default{ createProductShoes, getProductsShoes, deleteProductShoes};
+
+const updateProductShoesStock = async (shoes: string) => {
+    try { 
+        const searchname =  shoes; 
+        // objeto para decrementar o estoque
+        const updateQuery = {
+            $inc: {
+              stock: -1
+            }
+          };
+        const options =  {new: true };
+
+    const productfinded = await ProductShoes.findOneAndUpdate({name: searchname }, updateQuery, options);
+    if (!productfinded) {
+        // Lidar com o caso de não encontrar o documento
+        return { error: "Produto não encontrado ou estoque já está em 0." };
+    } else {
+        return productfinded;
+    }
+    } catch(error) {
+        throw error
+    }
+};
+export default{ createProductShoes, getProductsShoes, deleteProductShoes, updateProductShoesStock};
