@@ -14,7 +14,8 @@ router.post("/", async (req, res) => {
         url: req.body.url,
         price: req.body.price,
         color: req.body.color,
-        height: req.body.height
+        height: req.body.height,
+        stock: req.body.stock,
     };
     try {
         await socksServices.createProductSocks(socks);
@@ -48,12 +49,34 @@ router.put("/:name", async(req,res) => {
             url: req.body.url,
             price: req.body.price,
             color: req.body.color,
-            height: req.body.height
+            height: req.body.height,
+            stock: req.body.stock,
         }
         const updatedData = await socksServices.updateProductSocks(name, newData)
         res.status(200).send(updatedData)
     } catch (error) {
         res.status(500).send({message: "gui.dev é o melhor"})
+    }
+});
+
+router.patch("/:name/:amount", async(req,res) => {
+    try {
+        const name = req.params.name;
+        const amount = parseInt(req.params.amount, 10);
+        const updatedData = await socksServices.updateDecrementSocks(name, amount);
+        res.status(200).send(updatedData);
+    } catch (error) {
+        res.status(500).send({message: "gui.dev é o melhor"});
+    }
+});
+
+router.get("/:name", async(req,res) => {
+    try {
+        const name = req.params.name;
+        const data = await socksServices.searchSocks(name);
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send({message: "gui.dev é o melhor"});
     }
 });
 

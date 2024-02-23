@@ -11,6 +11,7 @@ interface Socks {
     material: String;
     url: String;
     height: String;
+    stock: Number;
 }
 
 const productSchema = new Schema<Socks>({ 
@@ -23,6 +24,7 @@ const productSchema = new Schema<Socks>({
     material: {type: String, required: true },
     url: {type: String, required: true },
     height: {type: String, required: true },
+    stock: {type: Number, required: true },
  });
 
  const Product  = model<Socks>('Productsocks', productSchema, 'meias');
