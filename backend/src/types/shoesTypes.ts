@@ -9,6 +9,7 @@ const shoesSchema = z.object({
     price: z.number().optional(),
     color: z.string().optional(),
     flavor: z.string().optional(),
+    url: z.string(),
     stock: z.number(),
 });
 

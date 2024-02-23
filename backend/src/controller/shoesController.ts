@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
         price: req.body.price,
         color: req.body.color,
         flavor: req.body.flavor,
+        url: req.body.url,
         stock: req.body.stock
     };
     try {
@@ -74,6 +75,7 @@ router.put("/:name", async (req, res) => {
         price: req.body.price,
         color: req.body.color,
         flavor: req.body.flavor,
+        url: req.body.url,
         stock: req.body.stock
     }
     const nameshoesupdated =  await shoesServices.updateProcuct(searchname, updatedshoes);
