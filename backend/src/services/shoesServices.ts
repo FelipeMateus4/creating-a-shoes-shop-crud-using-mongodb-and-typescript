@@ -47,13 +47,13 @@ const deleteProductShoes = async (shoes: string) => {
     }
 };
 
-const updateProductShoesStock = async (shoes: string, quantidade: number) => {
+const updateProductShoesStock = async (shoes: string, amount: number) => {
     try { 
         const searchname =  shoes; 
         
         const updateQuery = {
             $inc: {
-              stock: -quantidade
+              stock: -amount
             }
           };
         const options =  {new: true };
