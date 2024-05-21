@@ -1,16 +1,15 @@
 import { Router } from "express";
 import { shoesController } from "./controller/shoesController";
 import { socksController } from "./controller/socksController";
-import express from "express";
-import { registerUser, logoutUser, authenticateUser } from "./controller/authController";
+import { registerUser, logoutUser, authenticateUser, verify } from "./controller/authController";
 
 const router = Router();
 
-router.use("/thundershoes", shoesController);
-router.use("/thundersocks", socksController);
-// para o registro
+
+// Definir rotas de autenticação
 router.post("/register", registerUser);
 router.post("/login", authenticateUser);
 router.post("/logout", logoutUser);
+router.post("/verify", verify);
 
-export { router };
+export {router};

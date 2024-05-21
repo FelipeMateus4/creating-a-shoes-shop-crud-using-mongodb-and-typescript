@@ -51,6 +51,14 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    token: {
+        type: String,
+        required: false,
+    },
+    verify: {
+        type: Boolean,
+        default: false,
+    }
 });
 userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {

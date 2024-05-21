@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Response } from "express";
 
+
 const generateToken = (res: Response, userId: string) => {
   const jwtSecret = process.env.JWT_SECRET || "";
   const token = jwt.sign({ userId }, jwtSecret, {
@@ -13,6 +14,8 @@ const generateToken = (res: Response, userId: string) => {
     sameSite: "strict",
     maxAge: 60 * 60 * 1000,
   });
+
+  return token;
 };
 
 const clearToken = (res: Response) => {

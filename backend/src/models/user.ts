@@ -1,10 +1,13 @@
 import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
+import { boolean } from "zod";
 
 export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  token: string;
+  verify: boolean;
   comparePassword: (enteredPassword: string) => boolean;
 }
 
@@ -22,6 +25,15 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
+  token: {
+    type: String,
+    required: false,
+  },
+  verify: {
+    type: Boolean,
+    default: false,
+    
+  }
 });
 
 userSchema.pre("save", async function (next) {

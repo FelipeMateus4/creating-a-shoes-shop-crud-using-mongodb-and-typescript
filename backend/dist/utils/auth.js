@@ -16,6 +16,7 @@ const generateToken = (res, userId) => {
         sameSite: "strict",
         maxAge: 60 * 60 * 1000,
     });
+    return token;
 };
 exports.generateToken = generateToken;
 const clearToken = (res) => {
