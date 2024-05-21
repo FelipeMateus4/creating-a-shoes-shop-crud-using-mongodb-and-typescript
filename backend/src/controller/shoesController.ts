@@ -2,7 +2,6 @@ import shoesServices from "../services/shoesServices";
 import { CreateShoesType } from "../types/shoesTypes";
 import { Router } from "express";
 
-
 const router = Router();
 
 router.post("/", async (req, res) => {

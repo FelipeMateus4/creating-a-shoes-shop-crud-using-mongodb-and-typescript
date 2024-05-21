@@ -62,11 +62,6 @@ const searchSocks = async (name: string) => {
     }
 };
 
-
-
-
-
-
 export default{ createProductSocks, 
                 deleteProductSocks, 
                 updateProductSocks, 
