@@ -9,7 +9,6 @@ const router = Router();
 // Definir rotas de autenticação
 router.post("/register", registerUser);
 router.post("/login", authenticateUser);
-router.post("/logout", logoutUser);
 router.post("/verify", verify);
 
 export {router};

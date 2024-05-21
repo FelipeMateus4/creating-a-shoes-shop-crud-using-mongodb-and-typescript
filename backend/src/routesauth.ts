@@ -9,6 +9,7 @@ const router = Router();
 
 router.use("/thundershoes", authenticateToken, shoesController);
 router.use("/thundersocks", authenticateToken, socksController);
+router.post("/logout", authenticateToken, logoutUser);
 router.get('/profile', authenticateToken, getUserProfile);
 
 export {router as authrouter}

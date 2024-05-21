@@ -65,31 +65,32 @@ router.patch("/:name/:amount", async (req: Request, res: Response) => {
     }
 });
 router.put("/:name", async (req: Request, res: Response) => {
-    const searchname =  req.params.name;
+    const searchname = req.params.name;
     try {
-        const updatedshoes = { 
-        name: req.body.name,
-        gender: req.body.gender,
-        size: req.body.size,
-        brand: req.body.brand,
-        productType: req.body.productType,
-        price: req.body.price,
-        color: req.body.color,
-        flavor: req.body.flavor,
-        url: req.body.url,
-        stock: req.body.stock
-    }
-    const nameshoesupdated =  await shoesServices.updateProcuct(searchname, updatedshoes);
-    return res.status(200).send(nameshoesupdated);
+        const updatedFields: any = {};
+
+        // Popula updatedFields apenas com os campos presentes no corpo da requisição
+        for (const key of Object.keys(req.body)) {
+            updatedFields[key] = req.body[key];
+        }
+
+        const nameshoesupdated = await shoesServices.updateProduct(searchname, updatedFields);
+        if (nameshoesupdated) {
+            return res.status(200).send(nameshoesupdated);
+        } else {
+            return res.status(404).send({ message: "Product not found" });
+        }
     } catch (error) {
-        return res.status(500).send({mesage: "erro na atualizacao dos dados"});
+        return res.status(500).send({ message: "Error updating product", error: error });
     }
 });
+
 
 router.get("/image/:name", async (req: Request, res: Response) => {
     try {
         const nameshoe = req.params.name;
-        const imageurl = shoesServices.getimage(nameshoe);
+        const imageurl = await shoesServices.getimage(nameshoe);
+        console.log(imageurl)
         if(imageurl) {
             return res.status(201).send(imageurl) 
         }

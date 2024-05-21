@@ -78,7 +78,16 @@ const verify = async (req: Request, res: Response) => {
   }
 };
 
-const logoutUser = (req: Request, res: Response) => {
+const logoutUser = async (req: Request, res: Response) => {
+  const user =  res.locals.user;
+  const email =  user.email
+  console.log(user.email)
+
+  const procurado = await User.findOne({ email })
+  if(procurado) {
+    user.verify = false;
+    await user.save()
+  }
   clearToken(res);
   return res.status(200).json({ message: "User logged out" });
 };

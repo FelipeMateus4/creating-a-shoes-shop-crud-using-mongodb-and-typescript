@@ -70,7 +70,7 @@ const updateProductShoesStock = async (shoes: string, amount: number) => {
     }
 };
 
-const updateProcuct = async (shoes: string, update: CreateShoesType) => {
+const updateProduct = async (shoes: string, update: CreateShoesType) => {
     try {
         const searchname = shoes;
         const options =  {new: true };
@@ -99,4 +99,4 @@ const getimage = async (name: string) => {
     }
 }
 
-export default{ createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProcuct, getProductsShoes, getimage};
+export default{ createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProduct, getProductsShoes, getimage};
