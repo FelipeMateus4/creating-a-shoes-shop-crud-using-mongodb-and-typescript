@@ -1,10 +1,11 @@
 import socksServices from "../services/socksServices";
 import { CreateSocksType } from "../types/socksTypes";
 import { Router } from "express";
+import { Request, Response } from "express";
 
 const router = Router();
 
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
     const socks: CreateSocksType = {
         name: req.body.name,
         model: req.body.model,
@@ -26,7 +27,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.delete("/:name", async(req,res) => {
+router.delete("/:name", async(req: Request, res: Response) => {
     try {
         const name = req.params.name
         await socksServices.deleteProductSocks(name)
@@ -37,7 +38,7 @@ router.delete("/:name", async(req,res) => {
 
 });
 
-router.put("/:name", async(req,res) => {
+router.put("/:name", async(req: Request, res: Response) => {
     try {
         const name = req.params.name
         const newData = {
@@ -59,7 +60,7 @@ router.put("/:name", async(req,res) => {
     }
 });
 
-router.patch("/:name/:amount", async(req,res) => {
+router.patch("/:name/:amount", async(req: Request, res: Response) => {
     try {
         const name = req.params.name;
         const amount = parseInt(req.params.amount, 10);
@@ -70,7 +71,7 @@ router.patch("/:name/:amount", async(req,res) => {
     }
 });
 
-router.get("/:name", async(req,res) => {
+router.get("/:name", async(req: Request, res: Response) => {
     try {
         const name = req.params.name;
         const data = await socksServices.searchSocks(name);

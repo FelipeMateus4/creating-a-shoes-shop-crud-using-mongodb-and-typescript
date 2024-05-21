@@ -84,4 +84,19 @@ const updateProcuct = async (shoes: string, update: CreateShoesType) => {
         throw error
     }
 }
-export default{ createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProcuct, getProductsShoes};
+
+const getimage = async (name: string) => {
+    try {
+        const shoe = await ProductShoes.findOne({ name });
+        if(shoe) {
+            return shoe.url
+        }
+        else {
+            return { error: "produto nao encontrado ou nao existe"}
+        }
+    } catch (error) {
+        return { message: "Internal Server Error", error: error };
+    }
+}
+
+export default{ createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProcuct, getProductsShoes, getimage};

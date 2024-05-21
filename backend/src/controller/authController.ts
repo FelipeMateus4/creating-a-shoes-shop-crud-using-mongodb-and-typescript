@@ -5,6 +5,8 @@ import { sendTokenEmail } from "../utils/emailoptions";
 import crypto from 'crypto';
 
 const registerUser = async (req: Request, res: Response) => {
+
+  try {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email });
 
@@ -26,11 +28,17 @@ const registerUser = async (req: Request, res: Response) => {
       email: user.email,
     });
   } else {
-    res.status(400).json({ message: "An error occurred in creating the user" });
+    return res.status(400).json({ message: "An error occurred in creating the user" });
   }
+
+} catch (error) {
+    return res.status(500).json({ message: "Internal Server Error", error: error });
+}
 };
 
 const authenticateUser = async (req: Request, res: Response) => {
+  try {
+    
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user && (await user.comparePassword(password))) {
@@ -43,33 +51,41 @@ const authenticateUser = async (req: Request, res: Response) => {
     res.status(201).json({ message: "please, verify your email"});
   }
   else {
-    res.status(401).json({ message: "User not found / password incorrect" });
+    return res.status(401).json({ message: "User not found / password incorrect" });
   }
+} catch (error) {
+    return res.status(500).json({ message: "Internal Server Error", error: error });
+}
 };
 
-const verify =  async (req: Request, res: Response) => {
-    const {email, token} = req.body;
+const verify = async (req: Request, res: Response) => {
+  const { email, token } = req.body;
+  
+  try {
     const user = await User.findOne({ email });
-    if(user && user.token===token) {
+
+    if (user && user.token === token) {
       user.token = "";
       user.verify = true;
-      user.save();
+      await user.save();
       generateToken(res, user._id as string);
-      res.status(200).json({message: "login efetuado"})
+      res.status(200).json({ message: "Login efetuado" });
+    } else {
+      return res.status(401).json({ message: "User not found / token incorrect" });
     }
-   else {
-    res.status(401).json({ message: "User not found / toeken incorrect" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error", error: error });
   }
 };
 
 const logoutUser = (req: Request, res: Response) => {
   clearToken(res);
-  res.status(200).json({ message: "User logged out" });
+  return res.status(200).json({ message: "User logged out" });
 };
 
 const getUserProfile = (req: Request, res: Response) => {
   const user =  res.locals.user; // Acessa os dados do usuário autenticado
-  res.status(200).json({ message: 'This is the user profile.', user });
+  return res.status(200).json({ message: 'This is the user profile.', user });
 };
 
 export { registerUser, authenticateUser, logoutUser, verify, getUserProfile};
