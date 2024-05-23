@@ -13,4 +13,4 @@ router.use("/thundershoes", middleware_1.authenticateToken, shoesController_1.sh
 router.use("/thundersocks", middleware_1.authenticateToken, socksController_1.socksController);
 router.post("/logout", middleware_1.authenticateToken, authController_1.logoutUser);
 router.get('/profile', middleware_1.authenticateToken, authController_1.getUserProfile);
-router.use('/updatepass', middleware_1.authenticateToken, userlogincontroller_1.userloginController);
+router.use('/update', middleware_1.authenticateToken, userlogincontroller_1.userloginController);

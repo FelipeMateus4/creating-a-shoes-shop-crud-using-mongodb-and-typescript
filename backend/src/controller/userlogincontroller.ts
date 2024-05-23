@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 const router =  Router();
 
-router.put('/', async (req: Request, res: Response) => {
+router.put('/password', async (req: Request, res: Response) => {
     try {
         const { email, password, newPassword, confirmatePassword } = req.body;
 

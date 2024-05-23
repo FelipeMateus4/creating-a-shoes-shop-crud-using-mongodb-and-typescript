@@ -12,6 +12,6 @@ router.use("/thundershoes", authenticateToken, shoesController)
 router.use("/thundersocks", authenticateToken, socksController)
 router.post("/logout", authenticateToken, logoutUser)
 router.get('/profile', authenticateToken, getUserProfile)
-router.use('/updatepass', authenticateToken, userloginController)
+router.use('/update', authenticateToken, userloginController)
 
 export {router as authrouter}
