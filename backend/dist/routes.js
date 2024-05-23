@@ -8,5 +8,4 @@ exports.router = router;
 // Definir rotas de autenticação
 router.post("/register", authController_1.registerUser);
 router.post("/login", authController_1.authenticateUser);
-router.post("/logout", authController_1.logoutUser);
 router.post("/verify", authController_1.verify);

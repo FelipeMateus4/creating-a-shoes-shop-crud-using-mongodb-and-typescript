@@ -4,7 +4,7 @@ import User from '../models/user';
 
 const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
     console.log('Cookies:', req.cookies);
-    const token = req.cookies.jwt; // Acessa o cookie com o nome correto "jwt"
+    const token = req.cookies.jwt; 
 
     if (!token) {
         return res.status(401).json({ message: 'Access Denied: No Token Provided!' });

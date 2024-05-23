@@ -80,7 +80,7 @@ const updateProductShoesStock = (shoes, amount) => __awaiter(void 0, void 0, voi
         throw error;
     }
 });
-const updateProcuct = (shoes, update) => __awaiter(void 0, void 0, void 0, function* () {
+const updateProduct = (shoes, update) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const searchname = shoes;
         const options = { new: true };
@@ -96,4 +96,18 @@ const updateProcuct = (shoes, update) => __awaiter(void 0, void 0, void 0, funct
         throw error;
     }
 });
-exports.default = { createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProcuct, getProductsShoes };
+const getimage = (name) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const shoe = yield shoes_1.ProductShoes.findOne({ name });
+        if (shoe) {
+            return shoe.url;
+        }
+        else {
+            return { error: "produto nao encontrado ou nao existe" };
+        }
+    }
+    catch (error) {
+        return { message: "Internal Server Error", error: error };
+    }
+});
+exports.default = { createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProduct, getProductsShoes, getimage };

@@ -12,27 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateToken = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const user_1 = __importDefault(require("../models/user"));
-const authenticateToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Cookies:', req.cookies);
-    const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: 'Access Denied: No Token Provided!' });
-    }
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const updatePassword = (user, password) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const secret = process.env.JWT_SECRET;
-        const decoded = jsonwebtoken_1.default.verify(token, secret);
-        const user = yield user_1.default.findById(decoded.userId);
-        if (!user || !user.verify) {
-            return res.status(401).json({ message: 'Access Denied: User not verified or not found' });
-        }
-        res.locals.user = user;
-        next();
+        const salt = yield bcryptjs_1.default.genSalt(10);
+        const newpassword = yield bcryptjs_1.default.hash(password, salt);
+        const results = yield user_1.default.findOneAndUpdate({ name: user.name }, { $set: { password: newpassword } }, { new: true });
+        if (!results)
+            throw new Error('user not found');
+        return results;
     }
     catch (error) {
-        res.status(400).json({ message: 'Invalid Token' });
+        return error;
     }
+    ;
 });
-exports.authenticateToken = authenticateToken;
+exports.default = { updatePassword };

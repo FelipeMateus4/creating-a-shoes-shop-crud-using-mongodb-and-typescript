@@ -8,7 +8,7 @@ export interface IUser extends Document {
   password: string;
   token: string;
   verify: boolean;
-  comparePassword: (enteredPassword: string) => boolean;
+  comparePassword: (enteredPassword: string) => Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
@@ -35,8 +35,9 @@ const userSchema = new Schema<IUser>({
     
   }
 });
-
+// realizado antes de salvar
 userSchema.pre("save", async function (next) {
+  //verifica se a senha foi modificada, caso não, a criptografia não é necessária
   if (!this.isModified("password")) {
     next();
   }

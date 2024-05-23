@@ -81,22 +81,36 @@ router.patch("/:name/:amount", (req, res) => __awaiter(void 0, void 0, void 0, f
 router.put("/:name", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const searchname = req.params.name;
     try {
-        const updatedshoes = {
-            name: req.body.name,
-            gender: req.body.gender,
-            size: req.body.size,
-            brand: req.body.brand,
-            productType: req.body.productType,
-            price: req.body.price,
-            color: req.body.color,
-            flavor: req.body.flavor,
-            url: req.body.url,
-            stock: req.body.stock
-        };
-        const nameshoesupdated = yield shoesServices_1.default.updateProcuct(searchname, updatedshoes);
-        return res.status(200).send(nameshoesupdated);
+        const updatedFields = {};
+        // Popula updatedFields apenas com os campos presentes no corpo da requisição
+        for (const key of Object.keys(req.body)) {
+            updatedFields[key] = req.body[key];
+        }
+        const nameshoesupdated = yield shoesServices_1.default.updateProduct(searchname, updatedFields);
+        if (nameshoesupdated) {
+            return res.status(200).send(nameshoesupdated);
+        }
+        else {
+            return res.status(404).send({ message: "Product not found" });
+        }
     }
     catch (error) {
-        return res.status(500).send({ mesage: "erro na atualizacao dos dados" });
+        return res.status(500).send({ message: "Error updating product", error: error });
+    }
+}));
+router.get("/image/:name", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const nameshoe = req.params.name;
+        const imageurl = yield shoesServices_1.default.getimage(nameshoe);
+        console.log(imageurl);
+        if (imageurl) {
+            return res.status(201).send(imageurl);
+        }
+        else {
+            return res.status(404).send({ message: "image not found" });
+        }
+    }
+    catch (error) {
+        return res.status(500).send({ message: "internal server error:" + error });
     }
 }));

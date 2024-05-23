@@ -60,8 +60,10 @@ const userSchema = new mongoose_1.Schema({
         default: false,
     }
 });
+// realizado antes de salvar
 userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
+        //verifica se a senha foi modificada, caso não, a criptografia não é necessária
         if (!this.isModified("password")) {
             next();
         }
