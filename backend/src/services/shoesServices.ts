@@ -7,7 +7,7 @@ const createProductShoes = async ( shoe: CreateShoesType ) =>{
         await newshoes.save();
         return newshoes;
     } catch (error) {
-    throw (error)     
+    throw (error);     
     }
 };
 
@@ -81,7 +81,7 @@ const updateProduct = async (shoes: string, update: CreateShoesType) => {
             return productfinded;
         }
     } catch (error) {
-        throw error
+        throw error;
     }
 }
 

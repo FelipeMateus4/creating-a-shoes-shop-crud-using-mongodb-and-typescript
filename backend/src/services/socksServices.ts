@@ -4,10 +4,10 @@ import { CreateSocksType } from "../types/socksTypes";
 const createProductSocks = async ( sock: CreateSocksType ) =>{
     try {
         const newsocks = new ProductSocks(sock)
-        await newsocks.save()
+        await newsocks.save();
         return newsocks;
     } catch (error) {
-    throw (error)     
+    throw (error);   
     }
 };
 
@@ -15,7 +15,7 @@ const deleteProductSocks = async (name: string) => {
     try {
         await ProductSocks.findOneAndDelete({name})
     } catch (error) {
-        throw error
+        throw error;
     }
 };
 
@@ -28,7 +28,7 @@ const updateProductSocks = async (name: string, update: CreateSocksType) => {
         else
             return newData
     } catch (error) {
-        throw error
+        throw error;
     }
 };
 
@@ -46,7 +46,7 @@ const updateDecrementSocks = async (name: string, amount: number) => {
         else
             return newData
     } catch (error) {
-        throw error
+        throw error;
     }
 };
 
@@ -58,7 +58,7 @@ const searchSocks = async (name: string) => {
         else
             return data
     } catch (error) {
-        throw error
+        throw error;
     }
 };
 

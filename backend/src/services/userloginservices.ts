@@ -21,4 +21,20 @@ const updatePassword = async (user: CreateUsersType, password: string) => {
     };
 }
 
-export default{ updatePassword };
+const updateEmail = async (user: CreateUsersType, newemail: string) => {
+    try {
+        const userResult = await User.findOneAndUpdate({email: user.email},
+            {$set: {email: newemail}},
+            {new: true}
+        );
+        if(!userResult) {
+            throw new Error('user not found');
+        }
+        return userResult;
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export default{ updatePassword, updateEmail };
