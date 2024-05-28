@@ -49,7 +49,7 @@ router.post('/email/request', async (req: Request, res: Response) => {
         user.token = token;
         user.save();
         await sendTokenEmail(email, token);
-            return res.status(200).send( { message: "Token has been sent to your email"})
+            return res.status(200).send( { message: "Token has been sent to your"})
         // verificar o email com o token para validar a troca de senha
     } else {
             return res.status(404).send( { message: "Invalid password" });
@@ -76,4 +76,7 @@ router.put('/email/update', async(req: Request, res: Response) => {
     }
 });
 
+router.put('/remove/user', (req: Request, Res: Response) => {
+    
+})
 export { router as userloginController };

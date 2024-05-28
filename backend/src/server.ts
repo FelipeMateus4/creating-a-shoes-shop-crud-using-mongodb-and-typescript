@@ -2,8 +2,8 @@ import express from "express";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import { router } from "./routes";
-import { authrouter } from "./routesauth";
+import { router } from "./routes/routes";
+import { authrouter } from "./routes/routesauth";
 import cookieParser from "cookie-parser";
 import { authenticateToken } from "./middleware/middleware";
 
@@ -42,7 +42,4 @@ app.use(router);
 
 app.use('/users', authenticateToken, authrouter );
 
-// Inicia o servidor na porta definida no arquivo .env ou porta padrão
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+export { app, PORT };

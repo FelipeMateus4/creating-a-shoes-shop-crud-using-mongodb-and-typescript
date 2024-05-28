@@ -55,7 +55,7 @@ router.post('/email/request', (req, res) => __awaiter(void 0, void 0, void 0, fu
             user.token = token;
             user.save();
             yield (0, emailoptions_1.sendTokenEmail)(email, token);
-            return res.status(200).send({ message: "Token has been sent to your email" });
+            return res.status(200).send({ message: "Token has been sent to your" });
             // verificar o email com o token para validar a troca de senha
         }
         else {
@@ -84,3 +84,5 @@ router.put('/email/update', (req, res) => __awaiter(void 0, void 0, void 0, func
         return res.status(500).send({ message: "Internal server error:" + error });
     }
 }));
+router.put('/remove/user', (req, Res) => {
+});

@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { shoesController } from "./controller/shoesController";
-import { socksController } from "./controller/socksController";
-import { userloginController } from "./controller/userlogincontroller";
-import { registerUser, logoutUser, authenticateUser, getUserProfile } from "./controller/authController";
-import { authenticateToken} from  "./middleware/middleware";
+import { shoesController } from "../controller/shoesController";
+import { socksController } from "../controller/socksController";
+import { userloginController } from "../controller/userlogincontroller";
+import { registerUser, logoutUser, authenticateUser, getUserProfile } from "../controller/authController";
+import { authenticateToken} from  "../middleware/middleware";
 
 const router = Router();
 
