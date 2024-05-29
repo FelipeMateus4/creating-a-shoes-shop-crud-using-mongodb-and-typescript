@@ -86,4 +86,27 @@ it('should return the product if found', async () => {
       // Verifica se o método save foi chamado
       expect(mockedShoe.save).toHaveBeenCalled();
     });
+
+    it("should be return updated shoe", async () => {
+      const shoename = "carlos";
+      const mockProduct = {
+        name: shoename,
+        gender: "male",
+        size: 42,
+        brand: "Nike",
+        productType: "running",
+        price: 199.99,
+        color: "blue",
+        flavor: "none",
+        url: "http://example.com/shoe",
+        stock: 10
+      };
+
+      (ProductShoes.findOneAndUpdate as jest.Mock).mockResolvedValue(mockProduct);
+
+      const result = await shoesServices.updateProduct(shoename, mockProduct);
+
+      expect(result).toEqual(mockProduct);
+      expect(ProductShoes.findOneAndUpdate).toHaveBeenLastCalledWith({name: shoename}, mockProduct, {new: true })
+    })
   });
