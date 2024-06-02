@@ -4,14 +4,14 @@ import { CreateShoesType} from "../types/shoesTypes";
 const createProductShoes = async ( shoe: CreateShoesType ) =>{
     try {
         const newshoes = new ProductShoes(shoe)
-        await newshoes.save()
+        await newshoes.save();
         return newshoes;
     } catch (error) {
-    throw (error)     
+    throw (error);     
     }
 };
 
-const getProductsShoes = async () => {
+const getProductsShoesAll = async () => { 
     try {
         const products = await ProductShoes.find({});
         return products;
@@ -19,17 +19,84 @@ const getProductsShoes = async () => {
         throw error;
     }
 };
-const deleteProductShoes = async (shoes: string) => {
-    try {  
-    const searchname =  shoes;
-    const deleteshoe = await ProductShoes.findOne({name: searchname})
-} catch (error) {
-    throw error
-};
+
+const getProductsShoes = async (shoe: string) => {
     try {
-    await ProductShoes.deleteOne();
+        const searchname = shoe;
+        const findedproduct = await ProductShoes.findOne({name: searchname});
+        if (!findedproduct) {
+            return { error: "Produto não encontrado" };
+        } else {
+            return findedproduct;
+        }
     } catch (error) {
         throw error;
     }
 };
-export default{ createProductShoes, getProductsShoes, deleteProductShoes};
+const deleteProductShoes = async (shoes: string) => {
+    try {  
+    const searchname =  shoes;
+    const prod = await ProductShoes.findOne({name: searchname});
+    if (!prod){
+        return { error: "Produto não encontrado para ser deletado" };
+    }
+    await ProductShoes.deleteOne({ name: searchname });
+    return { message: "deu certo poha"};
+    } catch (error) {
+        throw error;
+    }
+};
+
+const updateProductShoesStock = async (shoes: string, amount: number) => {
+    try { 
+        const searchname =  shoes; 
+        
+        const updateQuery = {
+            $inc: {
+              stock: -amount
+            }
+          };
+        const options =  {new: true };
+
+    const productfinded = await ProductShoes.findOneAndUpdate({name: searchname }, updateQuery, options);
+    if (!productfinded) {
+        // Lidar com o caso de não encontrar o documento
+        return { error: "Produto não encontrado" };
+    } else {
+        return productfinded;
+    }
+    } catch(error) {
+        throw error;
+    }
+};
+
+const updateProduct = async (shoes: string, update: CreateShoesType) => {
+    try {
+        const searchname = shoes;
+        const options =  {new: true };
+        const productfinded = await ProductShoes.findOneAndUpdate({name: searchname}, update, options);
+        if (!productfinded) {
+            return { error: "Produto não encontrado ou estoque já está em 0." };
+        } else { 
+            return productfinded;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+const getimage = async (name: string) => {
+    try {
+        const shoe = await ProductShoes.findOne({ name });
+        if(shoe) {
+            return shoe.url
+        }
+        else {
+            return { error: "produto nao encontrado ou nao existe"}
+        }
+    } catch (error) {
+        return { message: "Internal Server Error", error: error };
+    }
+}
+
+export default{ createProductShoes, getProductsShoesAll, deleteProductShoes, updateProductShoesStock, updateProduct, getProductsShoes, getimage};

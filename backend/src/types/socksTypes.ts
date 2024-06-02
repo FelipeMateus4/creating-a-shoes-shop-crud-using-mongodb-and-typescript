@@ -10,6 +10,7 @@ const socksSchema = z.object ({
     material: z.string(),
     url: z.string(),
     height: z.string(),
+    stock: z.number(),
 });
 
 type CreateSocksType = z.infer<typeof socksSchema>;

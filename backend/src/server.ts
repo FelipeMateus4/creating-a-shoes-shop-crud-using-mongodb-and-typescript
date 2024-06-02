@@ -2,7 +2,10 @@ import express from "express";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import { router } from "./routes";
+import { router } from "./routes/routes";
+import { authrouter } from "./routes/routesauth";
+import cookieParser from "cookie-parser";
+import { authenticateToken } from "./middleware/middleware";
 
 // Carrega variáveis de ambiente do arquivo .env
 config();
@@ -18,6 +21,7 @@ app.disable("x-powered-by");
 // Middleware para parsing de JSON e URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Conexão ao MongoDB
 const MONGO_URI = process.env.MONGO_URI;
@@ -36,7 +40,6 @@ mongoose
 // Utiliza as rotas definidas no arquivo de rotas
 app.use(router);
 
-// Inicia o servidor na porta definida no arquivo .env ou porta padrão
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+app.use('/users', authenticateToken, authrouter );
+
+export { app, PORT };
